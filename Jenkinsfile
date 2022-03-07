@@ -15,6 +15,7 @@ node("docker") {
     subject = 'jfrog'
     identifier = 'v1'
     repo = 'jfrog-cli'
+    cliExecutableName = 'jfrog'
     sh 'rm -rf temp'
     sh 'mkdir temp'
     def goRoot = tool 'go-1.17.7'
