@@ -38,10 +38,7 @@ node("docker") {
 
         stage('Build JFrog CLI') {
             jfrogCliRepoDir = "${cliWorkspace}/${repo}/"
-            jfrogCliDir = "${jfrogCliRepoDir}jfrog-cli/jfrog"
-            sh "echo jfrogCliDir=$jfrogCliDir"
-            builderDir = "${cliExecutableName}-builder/"
-            builderPath = "${builderDir}${cliExecutableName}"
+            builderPath = "${cliExecutableName}-builder/"
 
             sh 'go version'
             dir("$jfrogCliRepoDir") {
