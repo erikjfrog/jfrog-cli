@@ -42,8 +42,8 @@ node("docker") {
                 sh 'build/build.sh'
             }
 
-            builderPath = "${frogCliRepoDir}${cliExecutableName}"
-            
+            builderPath = "${jfrogCliRepoDir}${cliExecutableName}"
+
             sh 'mkdir builder'
             sh "mv $jfrogCliRepoDir/jfrog builder/"
 
