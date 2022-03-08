@@ -117,7 +117,7 @@ def configRepo21() {
     ]) {
         sh """#!/bin/bash
             $builderPath c add repo21 --url=$REPO21_URL --user=$REPO21_USER --password=$REPO21_PASSWORD --interactive=false
-            $builderPath use repo21
+            $builderPath c use repo21
         """
     }
 }
