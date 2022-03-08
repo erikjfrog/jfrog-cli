@@ -1,5 +1,11 @@
 node("docker") {
     cleanWs()
+    // Subtract repo name from the repo url (https://REPO_NAME/ -> REPO_NAME/)
+    withCredentials([string(credentialsId: 'repo21-url', variable: 'REPO21_URL')]) {
+        echo "${REPO21_URL}"
+        def repo21Name = "${REPO21_URL}".substring(8, "${REPO21_URL}".length())
+        env.REPO_NAME_21="$repo21Name"
+    }
     def architectures = [
             [pkg: 'jfrog-cli-windows-amd64', goos: 'windows', goarch: 'amd64', fileExtention: '.exe', chocoImage: 'linuturk/mono-choco'],
             [pkg: 'jfrog-cli-linux-386', goos: 'linux', goarch: '386', fileExtention: '', debianImage: 'i386/ubuntu:16.04', debianArch: 'i386'],
@@ -124,7 +130,7 @@ def configRepo21() {
 
 def cleanupRepo21() {
     sh """#!/bin/bash
-        $builderPath c rm repo21
+        $builderPath c rm repo21 --interactive=false
     """
 }
 
