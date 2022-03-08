@@ -176,10 +176,6 @@ def buildRpmAndDeb(version, architectures) {
 }
 
 def uploadCli(architectures) {
-    stage("Publish scripts") {
-        uploadGetCliToJfrogRepo21()
-        uploadInstallCliToJfrogRepo21()
-    }
     for (int i = 0; i < architectures.size(); i++) {
         def currentBuild = architectures[i]
         stage("Build and upload ${currentBuild.pkg}") {
@@ -236,18 +232,6 @@ def pushDockerImageVersion(name, version) {
         sh """#!/bin/bash
             $builderPath rt docker-push $name:$version ecosys-docker-local
         """
-}
-
-def uploadGetCliToJfrogRepo21() {
-    sh """#!/bin/bash
-        $builderPath rt u $jfrogCliRepoDir/build/getcli/${cliExecutableName}.sh ecosys-jfrog-cli/$identifier/$version/scripts/getCli.sh --flat
-    """
-}
-
-def uploadInstallCliToJfrogRepo21() {
-    sh """#!/bin/bash
-        $builderPath rt u $jfrogCliRepoDir/build/installcli/${cliExecutableName}.sh ecosys-jfrog-cli/$identifier/$version/scripts/install-cli.sh --flat
-    """
 }
 
 def uploadBinaryToJfrogRepo21(pkg, fileName) {
