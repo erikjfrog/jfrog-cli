@@ -42,12 +42,10 @@ node("docker") {
                 sh 'build/build.sh'
             }
 
-            builderPath = "${jfrogCliRepoDir}${cliExecutableName}"
+            builderPath = "builder/${cliExecutableName}"
 
             sh 'mkdir builder'
             sh "mv $jfrogCliRepoDir/jfrog builder/"
-
-            sh 'ls -l /var/jenkins_home/workspace/eco-system/release/jfrog-cli-release/temp/jfrog-cli'
 
             // Extract CLI version
             version = sh(script: "$builderPath -v | tr -d 'jfrog version' | tr -d '\n'", returnStdout: true)
