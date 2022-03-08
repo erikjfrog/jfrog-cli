@@ -130,7 +130,7 @@ def configRepo21() {
 
 def cleanupRepo21() {
     sh """#!/bin/bash
-        $builderPath c rm repo21 --interactive=false
+        $builderPath c rm repo21 --quiet
     """
 }
 
