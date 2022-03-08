@@ -116,7 +116,7 @@ def configRepo21() {
         string(credentialsId: 'repo21-url', variable: 'REPO21_URL')
     ]) {
         sh """#!/bin/bash
-            $builderPath c repo21 --url=$REPO21_URL --user=$REPO21_USER --password=$REPO21_PASSWORD --interactive=false
+            $builderPath c add repo21 --url=$REPO21_URL --user=$REPO21_USER --password=$REPO21_PASSWORD --interactive=false
             $builderPath use repo21
         """
     }
