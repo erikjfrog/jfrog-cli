@@ -78,9 +78,9 @@ node("docker") {
                     buildPublishDockerImages(version, jfrogCliRepoDir)
                 }
             } else if ("$EXECUTION_MODE".toString().equals("Build CLI")) {
-                // downloadToolsCert()
+                downloadToolsCert()
                 print "Uploading version $version to Repo21"
-                // uploadCli(architectures)
+                uploadCli(architectures)
                 stage("Distribute executables") {
                     distributeToReleases("jfrog-cli", version, "cli-rbc-spec.json")
                 }
