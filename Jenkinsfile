@@ -78,9 +78,9 @@ node("docker") {
                     buildPublishDockerImages(version, jfrogCliRepoDir)
                 }
             } else if ("$EXECUTION_MODE".toString().equals("Build CLI")) {
-                downloadToolsCert()
+                // downloadToolsCert()
                 print "Uploading version $version to Repo21"
-                uploadCli(architectures)
+                // uploadCli(architectures)
                 stage("Distribute executables") {
                     distributeToReleases("jfrog-cli", version, "cli-rbc-spec.json")
                 }
@@ -287,6 +287,9 @@ def buildAndUpload(goos, goarch, pkg, fileExtension) {
 }
 
 def distributeToReleases(stage, version, rbcSpecName) {
+    sh "ls -l ${jfrogCliRepoDir}"
+    sh "ls -l ${jfrogCliRepoDir}build/"
+    sh "ls -l ${jfrogCliRepoDir}build/release_specs"
     sh """$builderPath rt rbc $stage-rb-$identifier $version --spec=${jfrogCliRepoDir}build/release_specs/$rbcSpecName --spec-vars="VERSION=$version;IDENTIFIER=$identifier" --sign"""
     sh "$builderPath rt rbd $stage-rb-$identifier $version --site=releases.jfrog.io --sync"
 }
