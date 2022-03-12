@@ -80,10 +80,9 @@ node("docker") {
             } else if ("$EXECUTION_MODE".toString().equals("Build CLI")) {
                 downloadToolsCert()
                 print "Uploading version $version to Repo21"
-                sh "$builderPath rt rbdel jfrog-cli-rb-$identifier $version --quiet"
                 uploadCli(architectures)
                 stage("Distribute executables") {
-                    distributeToReleases("jfrog-cli", version, "cli-rbc-spec.json")
+                    distributeToReleases("jfrog-cli-2", version, "cli-rbc-spec.json")
                 }
             }
         } finally {
