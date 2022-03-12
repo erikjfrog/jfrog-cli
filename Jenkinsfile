@@ -292,7 +292,7 @@ def distributeToReleases(stage, version, rbcSpecName) {
     sh "ls -l ${jfrogCliRepoDir}build/release_specs"
     sh "cat ${jfrogCliRepoDir}build/release_specs/$rbcSpecName"
     sh "$builderPath c show"
-    sh """$builderPath rt s --spec=${jfrogCliRepoDir}build/release_specs/$rbcSpecName --spec-vars=VERSION=$version;IDENTIFIER=$identifier""""
+    sh """$builderPath rt s --spec=${jfrogCliRepoDir}build/release_specs/$rbcSpecName --spec-vars=VERSION="$version;IDENTIFIER=$identifier""""
     sh """$builderPath rt rbc $stage-rb-$identifier $version --spec=${jfrogCliRepoDir}build/release_specs/$rbcSpecName --spec-vars="VERSION=$version;IDENTIFIER=$identifier" --sign"""
     sh "$builderPath rt rbd $stage-rb-$identifier $version --site=releases.jfrog.io --sync"
 }
