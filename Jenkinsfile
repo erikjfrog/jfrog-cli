@@ -278,7 +278,7 @@ def buildAndUpload(goos, goarch, pkg, fileExtension) {
 }
 
 def distributeToReleases(stage, version, rbcSpecName) {
-    sh "$builderPath rt rbc $stage-rb-$identifier $version --recursive=true --spec=${jfrogCliRepoDir}build/release_specs/$rbcSpecName --spec-vars=\"VERSION=$version;IDENTIFIER=$identifier\" --sign"
+    sh "$builderPath rt rbc $stage-rb-$identifier $version --spec=${jfrogCliRepoDir}build/release_specs/$rbcSpecName --spec-vars=\"VERSION=$version;IDENTIFIER=$identifier\" --sign"
     sh "$builderPath rt rbd $stage-rb-$identifier $version --site=releases.jfrog.io --sync"
 }
 
