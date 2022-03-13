@@ -200,7 +200,7 @@ def buildPublishDockerImages(version, jfrogCliRepoDir) {
         // Push alternative tags if needed.
         for (int n = 1; n < currentImage.names.size(); n++) {
             def newName = currentImage.names[n]
-            def currentRepo21Name = "$repo21Prefix/$currentImage.name"
+            def currentRepo21Name = "$repo21Prefix/$cnewName"
             buildDockerImage(currentRepo21Name, version, currentImage.dockerFile, jfrogCliRepoDir)
             pushDockerImageVersion(currentRepo21Name, version)
         }
