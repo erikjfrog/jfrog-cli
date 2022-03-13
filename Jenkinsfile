@@ -206,7 +206,7 @@ def buildPublishDockerImages(version, jfrogCliRepoDir) {
         }
     }
     stage("Distribute cli-docker-images to releases") {
-        distributeToReleases("cli-docker-images", version, "docker-images-rbc-spec.json")
+        distributeToReleases("cli-docker-images2", version, "docker-images-rbc-spec.json")
     }
     stage("Promote docker images") {
         for (int i = 0; i < images.size(); i++) {
