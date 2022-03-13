@@ -166,7 +166,7 @@ def buildRpmAndDeb(version, architectures) {
                """
             }
             stage("Distribute deb-rpm to releases") {
-                distributeToReleases("deb-rpm", version, "deb-rpm-rbc-spec.json")
+                distributeToReleases("deb-rpm2", version, "deb-rpm-rbc-spec.json")
             }
         }
     }
