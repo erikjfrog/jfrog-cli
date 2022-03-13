@@ -301,3 +301,12 @@ def publishNpmPackage(jfrogCliRepoDir) {
         }
     }
 }
+
+def dockerLogin(){
+    withCredentials([
+        usernamePassword(credentialsId: 'repo21', usernameVariable: 'REPO21_USER', passwordVariable: 'REPO21_PASSWORD'),
+        string(credentialsId: 'repo21-url', variable: 'REPO21_URL')
+    ]) {
+            sh "echo $REPO21_PASSWORD | docker login $REPO_NAME_21 -u=$REPO21_USER --password-stdin"
+       }
+}
