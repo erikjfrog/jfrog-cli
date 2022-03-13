@@ -67,11 +67,11 @@ node("docker") {
                 }
 
                 stage('Build and publish rpm and debian') {
-                    buildRpmAndDeb(version, architectures)
+                    // buildRpmAndDeb(version, architectures)
                 }
 
                 stage('Npm publish') {
-                    publishNpmPackage(jfrogCliRepoDir)
+                    // publishNpmPackage(jfrogCliRepoDir)
                 }
 
                 stage('Build and publish docker images') {
@@ -191,10 +191,22 @@ def buildPublishDockerImages(version, jfrogCliRepoDir) {
     // Build all images
     for (int i = 0; i < images.size(); i++) {
         def currentImage = images[i]
-        def imageRepo21Name = "$repo21Prefix/$currentImage.name"
-        print "Building and pushing docker image: $imageRepo21Name"
-        buildDockerImage(imageRepo21Name, version, currentImage.dockerFile, jfrogCliRepoDir)
-        pushDockerImageVersion(imageRepo21Name, version)
+        def primaryName = currentImage.names[0]
+
+        buildDockerImage(primaryName, version, currentImage.dockerFile, jfrogCliRepoDir)
+        pushDockerImageVersion(primaryName, version)
+
+        // Push alternative tags if needed.
+        for (int n = 1; n < currentImage.names.size(); n++) {
+            def newName = currentImage.names[n]
+            // Create new tag.
+            sh """#!/bin/bash
+                docker tag $primaryName:$version $newName:$version
+            """
+            def imageRepo21Name = "$repo21Prefix/$cnewName:$version"
+            print "Building and pushing docker image: $imageRepo21Name"
+            pushDockerImageVersion(newName, version)
+        }
     }
     stage("Distribute cli-docker-images to releases") {
         distributeToReleases("cli-docker-images", version, "docker-images-rbc-spec.json")
