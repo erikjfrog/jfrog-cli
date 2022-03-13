@@ -185,9 +185,6 @@ def buildPublishDockerImages(version, jfrogCliRepoDir) {
     def repo21Prefix = "${REPO_NAME_21}/ecosys-docker-local"
     def images = [
             // Pushing the second slim name for backward compatibility.
-            [dockerFile:'build/docker/slim/Dockerfile', names:['releases-docker.jfrog.io/jfrog/jfrog-cli', 'releases-docker.jfrog.io/jfrog/jfrog-cli-go']],
-            [dockerFile:'build/docker/full/Dockerfile', names:['releases-docker.jfrog.io/jfrog/jfrog-cli-full']]
-
             [dockerFile:'build/docker/slim/Dockerfile', names:["jfrog/jfrog-cli", "jfrog/jfrog-cli-go"]],
             [dockerFile:'build/docker/full/Dockerfile', names:["jfrog/jfrog-cli-full"]]
     ]
