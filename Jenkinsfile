@@ -187,25 +187,25 @@ def buildPublishDockerImages(version, jfrogCliRepoDir) {
             // Pushing the second slim name for backward compatibility.
             [dockerFile:'build/docker/slim/Dockerfile', names:['releases-docker.jfrog.io/jfrog/jfrog-cli', 'releases-docker.jfrog.io/jfrog/jfrog-cli-go']],
             [dockerFile:'build/docker/full/Dockerfile', names:['releases-docker.jfrog.io/jfrog/jfrog-cli-full']]
+
+            [dockerFile:'build/docker/slim/Dockerfile', names:["jfrog/jfrog-cli", "jfrog/jfrog-cli-go"]],
+            [dockerFile:'build/docker/full/Dockerfile', names:["jfrog/jfrog-cli-full"]]
     ]
     // Build all images
     for (int i = 0; i < images.size(); i++) {
         def currentImage = images[i]
         def primaryName = currentImage.names[0]
 
-        buildDockerImage(primaryName, version, currentImage.dockerFile, jfrogCliRepoDir)
-        pushDockerImageVersion(primaryName, version)
+        def imageRepo21Name = "$repo21Prefix/$primaryName"
+        buildDockerImage(imageRepo21Name, version, currentImage.dockerFile, jfrogCliRepoDir)
+        pushDockerImageVersion(imageRepo21Name, version)
 
         // Push alternative tags if needed.
         for (int n = 1; n < currentImage.names.size(); n++) {
             def newName = currentImage.names[n]
-            // Create new tag.
-            sh """#!/bin/bash
-                docker tag $primaryName:$version $newName:$version
-            """
-            def imageRepo21Name = "$repo21Prefix/$cnewName:$version"
-            print "Building and pushing docker image: $imageRepo21Name"
-            pushDockerImageVersion(newName, version)
+            def imageRepo21Name = "$repo21Prefix/$currentImage.name"
+            buildDockerImage(imageRepo21Name, version, currentImage.dockerFile, jfrogCliRepoDir)
+            pushDockerImageVersion(imageRepo21Name, version)
         }
     }
     stage("Distribute cli-docker-images to releases") {
