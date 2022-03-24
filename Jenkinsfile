@@ -42,9 +42,9 @@ node("docker") {
             }
         }
 
-        stage('jf release phase') {
-            runRelease(architectures)
-        }
+        // stage('jf release phase') {
+        //     runRelease(architectures)
+        // }
 
         stage('jfrog release phase') {
             cliExecutableName = 'jfrog'
