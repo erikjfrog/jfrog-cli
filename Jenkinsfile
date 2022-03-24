@@ -42,15 +42,15 @@ node("docker") {
             }
         }
 
-        // stage('jf release phase') {
-        //     runRelease(architectures)
-        // }
-
-        stage('jfrog release phase') {
-            cliExecutableName = 'jfrog'
-            identifier = 'v2'
+        stage('jf release phase') {
             runRelease(architectures)
         }
+
+        // stage('jfrog release phase') {
+        //     cliExecutableName = 'jfrog'
+        //     identifier = 'v2'
+        //     runRelease(architectures)
+        // }
     }
 }
 
@@ -81,17 +81,17 @@ def runRelease(architectures) {
                 dockerLogin()
             }
 
-            stage('Build and publish rpm and debian') {
-                buildRpmAndDeb(version, architectures)
-            }
+            // stage('Build and publish rpm and debian') {
+            //     buildRpmAndDeb(version, architectures)
+            // }
 
-            stage('Npm publish') {
-                publishNpmPackage(jfrogCliRepoDir)
-            }
+            // stage('Npm publish') {
+            //     publishNpmPackage(jfrogCliRepoDir)
+            // }
 
-            stage('Build and publish docker images') {
-                buildPublishDockerImages(version, jfrogCliRepoDir)
-            }
+            // stage('Build and publish docker images') {
+            //     buildPublishDockerImages(version, jfrogCliRepoDir)
+            // }
 
             // Download cert files, to be used for signing the Windows executable, packaged by Chocolatey.
             downloadToolsCert()
