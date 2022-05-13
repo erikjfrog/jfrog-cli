@@ -71,13 +71,13 @@ node("docker") {
                     dockerLogin()
                 }
 
-                stage('Build and publish rpm and debian') {
-                    buildRpmAndDeb(version, architectures)
-                }
+                // stage('Build and publish rpm and debian') {
+                //     buildRpmAndDeb(version, architectures)
+                // }
 
-                stage('Npm publish') {
-                    publishNpmPackage(jfrogCliRepoDir)
-                }
+                // stage('Npm publish') {
+                //     publishNpmPackage(jfrogCliRepoDir)
+                // }
 
                 stage('Build and publish docker images') {
                     buildPublishDockerImages(version, jfrogCliRepoDir)
