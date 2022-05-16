@@ -252,7 +252,7 @@ def buildDockerImage(name, version, dockerFile, jfrogCliRepoDir) {
 def tagDockerImage(name, version, newName, newVersion, jfrogCliRepoDir) {
     dir("$jfrogCliRepoDir") {
         sh """#!/bin/bash
-            docker tag $name:$version $nnewName:$vnewVersion
+            docker tag $name:$version $newName:$vnewVersion
         """
     }
 }
