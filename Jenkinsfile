@@ -243,7 +243,7 @@ def promoteDockerImage(name, version, jfrogCliRepoDir) {
 def buildDockerImage(name, version, dockerFile, jfrogCliRepoDir) {
     dir("$jfrogCliRepoDir") {
         sh """#!/bin/bash
-            docker build --tag=$name:$version -f $dockerFile .
+            docker build --tag=$name:$version --build-arg repo_name_21=${REPO_NAME_21} -f $dockerFile .
         """
     }
 }
