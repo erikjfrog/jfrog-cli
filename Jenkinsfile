@@ -222,9 +222,7 @@ def buildPublishDockerImages(version, jfrogCliRepoDir) {
 
             // Promote alternative tags if needed.
             for (int n = 1; n < currentImage.names.size(); n++) {
-                def newName = currentImage.names[n]
-                def currentRepo21Name = "$repo21Prefix/$newName"
-                promoteDockerImage(currentRepo21Name, version, jfrogCliRepoDir)
+                promoteDockerImage(currentImage.names[n], version, jfrogCliRepoDir)
             }
         }
     }
