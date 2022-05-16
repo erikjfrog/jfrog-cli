@@ -194,31 +194,31 @@ def buildPublishDockerImages(version, jfrogCliRepoDir) {
             [dockerFile:'build/docker/slim/Dockerfile', names:["jfrog/jfrog-cli", "jfrog/jfrog-cli-go"]],
             [dockerFile:'build/docker/full/Dockerfile', names:["jfrog/jfrog-cli-full"]]
     ]
-    for (int i = 0; i < images.size(); i++) {
-        def currentImage = images[i]
-        def primaryName = currentImage.names[0]
+    // for (int i = 0; i < images.size(); i++) {
+    //     def currentImage = images[i]
+    //     def primaryName = currentImage.names[0]
 
-        def imageRepo21Name = "$repo21Prefix/$primaryName"
-        buildDockerImage(imageRepo21Name, version, currentImage.dockerFile, jfrogCliRepoDir)
-        pushDockerImageVersion(imageRepo21Name, version)
+    //     def imageRepo21Name = "$repo21Prefix/$primaryName"
+    //     buildDockerImage(imageRepo21Name, version, currentImage.dockerFile, jfrogCliRepoDir)
+    //     pushDockerImageVersion(imageRepo21Name, version)
 
-        // Push alternative tags if needed.
-        for (int n = 1; n < currentImage.names.size(); n++) {
-            def newName = currentImage.names[n]
-            def currentRepo21Name = "$repo21Prefix/$newName"
-            tagDockerImage(imageRepo21Name, version, currentRepo21Name, version, jfrogCliRepoDir)
-            pushDockerImageVersion(currentRepo21Name, version)
-        }
-    }
+    //     // Push alternative tags if needed.
+    //     for (int n = 1; n < currentImage.names.size(); n++) {
+    //         def newName = currentImage.names[n]
+    //         def currentRepo21Name = "$repo21Prefix/$newName"
+    //         tagDockerImage(imageRepo21Name, version, currentRepo21Name, version, jfrogCliRepoDir)
+    //         pushDockerImageVersion(currentRepo21Name, version)
+    //     }
+    // }
 
-    stage("Distribute cli-docker-images to releases") {
-        distributeToReleases("cli-docker-images", version, "docker-images-rbc-spec.json")
-    }
+    // stage("Distribute cli-docker-images to releases") {
+    //     distributeToReleases("cli-docker-images", version, "docker-images-rbc-spec.json")
+    // }
 
     stage("Promote docker images") {
         for (int i = 0; i < images.size(); i++) {
             def currentImage = images[i]
-            promoteDockerImage(currentImage.name, version, jfrogCliRepoDir)
+            promoteDockerImage(currentImage.names[0], version, jfrogCliRepoDir)
 
             // Promote alternative tags if needed.
             for (int n = 1; n < currentImage.names.size(); n++) {
