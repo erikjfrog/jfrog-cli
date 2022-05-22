@@ -42,9 +42,9 @@ node("docker") {
             }
         }
 
-        stage('jf release phase') {
-            runRelease(architectures)
-        }
+        // stage('jf release phase') {
+        //     runRelease(architectures)
+        // }
 
         stage('jfrog release phase') {
             cliExecutableName = 'jfrog'
@@ -99,12 +99,12 @@ def runRelease(architectures) {
                 publishChocoPackage(version, jfrogCliRepoDir, architectures)
             }
         } else if ("$EXECUTION_MODE".toString().equals("Build CLI")) {
-            // downloadToolsCert()
-            // print "Uploading version $version to Repo21"
-            // uploadCli(architectures)
-            // stage("Distribute executables") {
-            //     distributeToReleases("jfrog-cli", version, "cli-rbc-spec.json")
-            // }
+            downloadToolsCert()
+            print "Uploading version $version to Repo21"
+            uploadCli(architectures)
+            stage("Distribute executables") {
+                distributeToReleases("jfrog-cli", version, "cli-rbc-spec.json")
+            }
             stage("Publish latest scripts") {
                 withCredentials([string(credentialsId: 'jfrog-cli-automation', variable: 'JFROG_CLI_AUTOMATION_ACCESS_TOKEN')]) {
                     options = "--url https://releases.jfrog.io/artifactory --access-token=$JFROG_CLI_AUTOMATION_ACCESS_TOKEN"
