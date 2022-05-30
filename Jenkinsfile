@@ -42,9 +42,9 @@ node("docker") {
             }
         }
 
-        stage('jf release phase') {
-            runRelease(architectures)
-        }
+        // stage('jf release phase') {
+        //     runRelease(architectures)
+        // }
 
         stage('jfrog release phase') {
             cliExecutableName = 'jfrog'
@@ -337,7 +337,7 @@ def buildAndUpload(goos, goarch, pkg, fileExtension) {
 }
 
 def distributeToReleases(stage, version, rbcSpecName) {
-    sh """$builderPath ds rbc $stage-rb-$identifier $version --spec=${cliWorkspace}/${repo}/build/release_specs/$rbcSpecName --spec-vars="VERSION=$version;IDENTIFIER=$identifier" --sign"""
+    sh """$builderPath ds rbc $stage-rb-$identifier $version --spec=${cliWorkspace}/${repo}/build/release_specs/$rbcSpecName --spec-vars="VERSION=1.18.2.a;IDENTIFIER=$identifier" --sign"""
     sh "$builderPath ds rbd $stage-rb-$identifier $version --site=releases.jfrog.io --sync"
 }
 
